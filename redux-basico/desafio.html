@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Redux Básico</title>
+</head>
+<body>
+    <div>
+        <h1>Desafio Redux Básico</h1>
+        <h3 id="nome"></h3>
+        <p id="email"></p>
+        <p id="tempo"></p>
+        <p id="total"></p>
+    </div>
+
+    <script type="module">
+        import store from './store/configureStore.js';
+        import {incrementarTempo, reduzirTempo, modificarEmail} from './store/aluno.js';
+        import {completarAula, completarCurso, resetarCurso} from './store/aulas.js';
+        
+
+        function render() {
+            let state = store.getState();
+            const nome = document.getElementById('nome');
+            nome.innerText = state.aluno.nome;
+
+            const email = document.getElementById('email');
+            email.innerText = state.aluno.email;
+
+            const tempo = document.getElementById('tempo')
+            tempo.innerText = state.aluno.diasRestantes;
+
+            const totalAulasCompletadas = state.aulas.filter(aula => aula.completa === true).length
+            const total = document.getElementById('total');
+            total.innerText = totalAulasCompletadas;
+        }
+        
+        render();
+        store.subscribe(render)
+
+    </script>
+</body>
+</html>

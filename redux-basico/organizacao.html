@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organização baseada em ducks</title>
+</head>
+<body>
+    
+    <script type="module">
+        import store from './store/configureStore.js';
+        import { incrementar, reduzir } from './store/contador.js';
+        store.subscribe(() => {
+            console.log(store.getState());
+        });
+
+        store.dispatch(incrementar());
+        store.dispatch(reduzir());
+        store.dispatch(incrementar());    
+    </script>
+</body>
+</html>

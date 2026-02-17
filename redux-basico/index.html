@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redux Básico</title>
+    
+</head>
+<body>
+    <script type="module">
+        import { createStore } from "./redux.browser.mjs";
+
+        // forma incorreta de criar o estado inicial
+        // function reducer() {
+        //     return { nome: "João", idade: 30 };
+        // }
+
+        // forma correta de criar o estado inicial
+        const initialState = { nome: "João", idade: 30 };
+        function reducer(state = initialState, action) {
+            return state;
+        }
+        const store = createStore(reducer);
+        // retorna o estado atual do store
+        const state = store.getState();
+        console.log(store);
+        console.log(store.getState());
+        console.log(state.nome);
+    </script>
+</body>
+</html>

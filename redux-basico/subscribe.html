@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe</title>
+</head>
+<body>
+    <div>
+        <h1>Total: <span id="total"></span></h1>
+        <button id="button">Incrementar</button>
+    </div>
+    <script type="module">
+        import { createStore } from "../redux.browser.mjs";
+        function reducer(state = 10, action) {
+          if(action.type === "INCREMENT") {
+            return state + 1;
+          }
+          if(action.type === "SOMAR") {
+            return state + action.payload;
+          }
+          return state;
+        }
+
+        const store  = createStore(reducer);
+       
+
+        store.dispatch({ type: "SOMAR", payload: 25 });
+        store.dispatch({ type: "INCREMENT" });
+
+        function render() {
+           const state = store.getState();
+           const total = document.getElementById("total");
+           total.innerText = state;
+        }
+
+        render();
+
+        // O subscribe é uma função que recebe um callback, e esse callback é executado toda vez que o estado é atualizado.
+        const unsubscribe = store.subscribe(render);
+
+        // O unsubscribe é uma função que é retornada pelo subscribe, e quando chamada, ela remove o callback do subscribe, ou seja, ele para de ser executado toda vez que o estado é atualizado.
+        unsubscribe();
+
+        const button = document.getElementById("button");
+        button.addEventListener("click", () => {
+          store.dispatch({ type: "INCREMENT" });
+        });
+
+       
+    </script>
+</body>
+</html>

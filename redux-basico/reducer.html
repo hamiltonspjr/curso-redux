@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reducer</title>
+</head>
+<body>
+    <div>
+        <h1>Total: <span id="total"></span></h1>
+        <button id="button">Incrementar</button>
+    </div>
+    <script type="module">
+        import { createStore } from "./redux.browser.mjs";
+        
+        function incrementar() {
+            return {
+                type: "INCREMENTAR"
+            }
+        }
+        function somar(payload) {
+            return {
+                type: "SOMAR",
+                payload
+            }
+        }
+        
+        const initialState = 0;
+
+        // o padrão do reducer é um switch case, onde cada case é um tipo de ação, e o default é o estado atual, ou seja, se a ação não for reconhecida, ele retorna o estado atual.
+        function reducer(state = initialState, action) {
+            switch(action.type) {
+                case "INCREMENTAR":
+                    return state + 1;
+                case "SOMAR":
+                    return state + action.payload;
+                default:
+                    return state;
+            }
+        }
+
+        const store  = createStore(reducer);
+       
+
+        store.dispatch(somar(25));
+        store.dispatch(incrementar());
+
+        function render() {
+           const state = store.getState();
+           const total = document.getElementById("total");
+           total.innerText = state;
+        }
+
+        render();
+
+        
+        const unsubscribe = store.subscribe(render);
+
+        const button = document.getElementById("button");
+        button.addEventListener("click", () => {
+          store.dispatch(incrementar());
+        });
+        
+    </script>
+</body>
+</html>

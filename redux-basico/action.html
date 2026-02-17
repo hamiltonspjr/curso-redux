@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        import { createStore } from "./redux.browser.mjs";
+        
+        // definindo as ações como constantes
+        const  INCREMENTAR = 'INCREMENTAR';
+        const  SOMAR = 'SOMAR';
+
+        // funções de ação (action creators)
+        function incrementar() {
+            return { type: INCREMENTAR };
+        }
+        function somar(valor) {
+            return { type: SOMAR, payload: valor };
+        }
+
+        const initialState = 10;
+
+        function reducer(state = initialState, action) {
+            if(action.type === INCREMENTAR) {
+                return state + 1;
+            }else if(action.type === SOMAR) {
+                return state + action.payload;
+            } else {
+                return state;
+            }
+        }
+
+        const store = createStore(reducer);
+        console.log(store.getState());
+
+        store.dispatch({ type: SOMAR, payload: 25 });
+        console.log(store.getState());
+
+        // dispatch de uma ação sem payload
+        store.dispatch({ type: INCREMENTAR});
+        console.log(store.getState());
+
+        // dispatch de uma ação usando a função de ação
+        store.dispatch(incrementar());
+        console.log(store.getState());
+        store.dispatch(somar(10));
+        console.log(store.getState());
+    </script>
+</body>
+</html>
